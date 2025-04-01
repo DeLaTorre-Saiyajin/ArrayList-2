@@ -31,9 +31,12 @@ public class PanelEnviar extends javax.swing.JPanel {
         modelo=new DefaultComboBoxModel();
         cmbUsuarios.setModel(modelo);
         //AÑADIR LAS DIRECCIONES DE CADA USUARIO AL COMBOBOX
-        for(Usuario u:usuarios){
+        /*for(Usuario u:usuarios){
             modelo.addElement(u.getEmail());
-        }
+        }*/
+        modelo.addElement("SELECCIONA DESTINATARIO");
+        //NO DEVUELVE LA DIRECCIÓN DE MEMORIA GRACIAS A TOSTRING
+        modelo.addAll(usuarios);
         
         
     }
@@ -123,7 +126,7 @@ public class PanelEnviar extends javax.swing.JPanel {
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         
         //OBTENER LA DIRECCIÓN DE CORREO SELECCIONADO EN EL COMBOBOX QUE SERÁ EL DESTINATARIO DEL MENSAJE
-        String email=(String)modelo.getElementAt(cmbUsuarios.getSelectedIndex());
+        String email=((Usuario)modelo.getElementAt(cmbUsuarios.getSelectedIndex())).getEmail();
         
         /*DESUSO
         String email=txtEmail.getText(); LO SUSTITUIMOS POR EL COMBOBOX (LÍNEA EN DESUSO)

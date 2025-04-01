@@ -33,6 +33,15 @@ public class Usuario {
         bEntrada.get(fila).setLeido(valor);
         
     }
+
+    
+    //METODO TOSTRING PARA EN VEZ DE DEVOLVER LA DIRECCION DE MEMORIA, DEVUELVA ESTE STRING
+    @Override
+    public String toString() {
+        return login+"  Email: " + email;
+    }
+    
+    
     
 
     public Usuario(String email) {

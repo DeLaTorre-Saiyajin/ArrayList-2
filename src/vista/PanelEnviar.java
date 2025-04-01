@@ -15,20 +15,20 @@ public class PanelEnviar extends javax.swing.JPanel {
     Empresa miEmpresa;
     Usuario logueado;
     DefaultComboBoxModel modelo;
-    
+
     public PanelEnviar(Empresa miEmpresa, Usuario logueado) {
-        
+
         initComponents();
         this.miEmpresa = miEmpresa;
         this.logueado = logueado;
         cargarDirecciones();
-        
+
     }
-    
-    private void cargarDirecciones(){
-        
-        ArrayList<Usuario> usuarios=miEmpresa.getUsuarios();
-        modelo=new DefaultComboBoxModel();
+
+    private void cargarDirecciones() {
+
+        ArrayList<Usuario> usuarios = miEmpresa.getUsuarios();
+        modelo = new DefaultComboBoxModel();
         cmbUsuarios.setModel(modelo);
         //AÑADIR LAS DIRECCIONES DE CADA USUARIO AL COMBOBOX
         /*for(Usuario u:usuarios){
@@ -37,10 +37,8 @@ public class PanelEnviar extends javax.swing.JPanel {
         modelo.addElement("SELECCIONA DESTINATARIO");
         //NO DEVUELVE LA DIRECCIÓN DE MEMORIA GRACIAS A TOSTRING
         modelo.addAll(usuarios);
-        
-        
-    }
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -124,26 +122,47 @@ public class PanelEnviar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        
-        //OBTENER LA DIRECCIÓN DE CORREO SELECCIONADO EN EL COMBOBOX QUE SERÁ EL DESTINATARIO DEL MENSAJE
-        String email=((Usuario)modelo.getElementAt(cmbUsuarios.getSelectedIndex())).getEmail();
-        
-        /*DESUSO
-        String email=txtEmail.getText(); LO SUSTITUIMOS POR EL COMBOBOX (LÍNEA EN DESUSO)
-        DESUSO*/
-        
-        String asunto=txtAsunto.getText();
-        String texto=txtMensaje.getText();
-        
-        boolean resultado=miEmpresa.anadirMensaje(asunto, email, texto, logueado);
-        if(resultado){
-            JOptionPane.showMessageDialog(this, "mensaje enviado");
+
+        int pos = cmbUsuarios.getSelectedIndex();
+
+        //IF CREADO PARA QUE HASTA QUE NO SE SELECCIONE UN DESTINATARIO EN EL COMBOBOX, NO PUEDAS ENVIAR UN MENSAJE
+        if (pos != 0) {
+
+            //OBTENER LA DIRECCIÓN DE CORREO SELECCIONADO EN EL COMBOBOX QUE SERÁ EL DESTINATARIO DEL MENSAJE
+            String email = ((Usuario) modelo.getElementAt(cmbUsuarios.getSelectedIndex())).getEmail();
+
+            /*DESUSO
+            String email=txtEmail.getText(); LO SUSTITUIMOS POR EL COMBOBOX (LÍNEA EN DESUSO)
+            DESUSO*/
+            
+            String asunto = txtAsunto.getText();
+            String texto = txtMensaje.getText();
+
+            boolean resultado = miEmpresa.anadirMensaje(asunto, email, texto, logueado);
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "mensaje enviado");
+                limpiar();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe el destinatario");
+            }
+
+        } 
+        else {
+            JOptionPane.showMessageDialog(this, "Primero selecciona el destinatario");
         }
-        else{
-            JOptionPane.showMessageDialog(this, "No existe el destinatario");
-        }
-        
+
+
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    //PARA QUE AL ENVIAR EL MENSAJE SE BORREN LOS CAMPOS DE TEXTO PARA ENVIAR OTRO MENSAJE
+    private void limpiar() {
+
+        txtAsunto.setText("");
+        txtMensaje.setText("");
+        cmbUsuarios.setSelectedIndex(0);
+
+    }
+
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:

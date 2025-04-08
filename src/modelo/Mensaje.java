@@ -24,11 +24,12 @@ public class Mensaje {
     
     private Usuario emisor;
 
-    public Mensaje(String asunto, String contenido, String email, Usuario emisor) {
+    public Mensaje(String asunto, String contenido, String email, Usuario emisor, Fecha fecha) {
         this.asunto = asunto;
         this.contenido = contenido;
         this.email=email;
         this.emisor=emisor;
+        this.fecha=fecha;
         leido=false;
     }
 

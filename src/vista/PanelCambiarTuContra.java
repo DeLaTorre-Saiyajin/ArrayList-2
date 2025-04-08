@@ -16,12 +16,13 @@ import utilidades.Encriptar;
 public class PanelCambiarTuContra extends javax.swing.JPanel {
 
     Usuario logueado;
-    
-    public PanelCambiarTuContra(Usuario logueado) {
+    VtnMenu v;
+    public PanelCambiarTuContra(Usuario logueado, VtnMenu v) {
         
         initComponents();
         this.logueado=logueado;
         txtUser.setText(logueado.getLogin());
+        this.v=v;
     }
 
     /**
@@ -126,7 +127,10 @@ public class PanelCambiarTuContra extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "CONTRASEÑA CAMBIADA");
             pwdContraActual.setText("");
             pwdContraNueva.setText("");
-            new VtnMenu(logueado).setVisible(true);
+            //ELIMINAR PANEL
+            v.eliminarPaneles();
+            
+            
         }
         
     }//GEN-LAST:event_btnCambiarActionPerformed

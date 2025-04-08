@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import modelo.Mensaje;
 import modelo.Usuario;
 import utilidades.Encriptar;
+import utilidadesString.Fecha;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Empresa {
         boolean encontrado = false;
 
         while (!encontrado && pos < usuarios.size()) {
-            if (pos != -1) {
+            
 
                 if ((usuarios.get(pos).getLogin().equals(nombre))) {
                     encontrado = true;
@@ -50,7 +51,7 @@ public class Empresa {
                     pos++;
                 }
 
-            }
+            
         }
         if (encontrado) {
 
@@ -58,14 +59,66 @@ public class Empresa {
                 pos = -1;
             }
 
-        } else {
+        }
+        else {
 
             pos = -1;
 
         }
         return pos;
     }
+    
+    
+    public int buscar2(String nombre) {
 
+        int pos = 0;
+        boolean encontrado = false;
+
+        while (!encontrado && pos < usuarios.size()) {
+
+                if ((usuarios.get(pos).getLogin().equals(nombre))) {
+                    encontrado = true;
+                } else {
+                    pos++;
+                }
+
+            
+        }
+        
+        return pos;
+    }
+
+    
+    public boolean compararUser(String login, String email){
+        
+        int pos=0;
+        boolean encontrado=false;
+        
+        while(!encontrado && pos<usuarios.size()){
+            
+            if(usuarios.get(pos).getLogin().equals(login)){
+                encontrado=true;
+            }
+            else{
+                pos++;
+            }
+            
+            if(encontrado){
+                
+                if(usuarios.indexOf(new Usuario(email))==-1){
+                    
+                    encontrado=false;
+                }
+                
+            }
+        }
+        
+        return encontrado;  
+    }
+    
+    
+    
+    
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
@@ -79,7 +132,8 @@ public class Empresa {
         if (pos == -1) {
             resultado = false;
         } else {
-            usuarios.get(pos).getbEntrada().add(new Mensaje(asunto, texto, email, emisor));
+            Fecha fechaHoy= new Fecha();
+            usuarios.get(pos).getbEntrada().add(new Mensaje(asunto, texto, email, emisor,fechaHoy));
         }
 
         return resultado;

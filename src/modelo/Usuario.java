@@ -38,8 +38,11 @@ public class Usuario {
     //METODO TOSTRING PARA EN VEZ DE DEVOLVER LA DIRECCION DE MEMORIA, DEVUELVA ESTE STRING
     @Override
     public String toString() {
-        return login+"  Email: " + email;
+        return email;
     }
+    
+    
+    
     
     
     

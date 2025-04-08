@@ -16,7 +16,6 @@ public class VtnMenu extends javax.swing.JFrame {
 
     Empresa miEmpresa;
     int login;
-    Usuario logueado;
     
     public VtnMenu(Empresa miEmpresa, int login) {
         
@@ -33,27 +32,14 @@ public class VtnMenu extends javax.swing.JFrame {
         
     }
     
-    public VtnMenu(Usuario logueado){
-        
-        initComponents();
-        
-        this.logueado=logueado;
-        
-        if(logueado.getTipo()==0){
-        
-            mnuAlta.setVisible(false);
-            mnuBaja.setVisible(false);
-            mnuCambiarContra.setVisible(false);
-            pack();
-        }
-        
-    }
-    
     
     
     PanelEnviar panelEnviar;
     PanelCambiarTuContra panelTuContra;
     PanelBandeja panelBandeja;
+    PanelAlta panelAlta;
+    PanelBaja panelBaja;
+    PanelContra panelContra;
 
 
     @SuppressWarnings("unchecked")
@@ -107,6 +93,11 @@ public class VtnMenu extends javax.swing.JFrame {
         jMenu2.add(mnuAlta);
 
         mnuBaja.setText("Bajas (ADMIN)");
+        mnuBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBajaActionPerformed(evt);
+            }
+        });
         jMenu2.add(mnuBaja);
 
         mnuCambiarContra.setText("Cambiar contraseña (ADMIN)");
@@ -172,16 +163,22 @@ public class VtnMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuEnviarActionPerformed
 
     private void mnuAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAltaActionPerformed
-        
+        eliminarPaneles();
+        panelAlta = new PanelAlta(miEmpresa);
+        getContentPane().add(panelAlta,BorderLayout.CENTER);
+        pack();
     }//GEN-LAST:event_mnuAltaActionPerformed
 
     private void mnuCambiarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambiarContraActionPerformed
-        
+        eliminarPaneles();
+        panelContra = new PanelContra(miEmpresa, this);
+        getContentPane().add(panelContra, BorderLayout.CENTER);
+        pack();
     }//GEN-LAST:event_mnuCambiarContraActionPerformed
 
     private void mnuCambiarTuContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambiarTuContraActionPerformed
         eliminarPaneles();
-        panelTuContra = new PanelCambiarTuContra(miEmpresa.getUsuarios().get(login));
+        panelTuContra = new PanelCambiarTuContra(miEmpresa.getUsuarios().get(login),this);
         getContentPane().add(panelTuContra,BorderLayout.CENTER);
         pack();
     }//GEN-LAST:event_mnuCambiarTuContraActionPerformed
@@ -193,6 +190,13 @@ public class VtnMenu extends javax.swing.JFrame {
         pack();
         
     }//GEN-LAST:event_mnuBandejaActionPerformed
+
+    private void mnuBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBajaActionPerformed
+        eliminarPaneles();
+        panelBaja = new PanelBaja(miEmpresa,this);
+        getContentPane().add(panelBaja,BorderLayout.CENTER);
+        pack();
+    }//GEN-LAST:event_mnuBajaActionPerformed
 
     public void comprobar(){
         
@@ -206,7 +210,7 @@ public class VtnMenu extends javax.swing.JFrame {
         }
     }
     
-    public void eliminarPaneles(){
+    public  void eliminarPaneles(){
         
         try{
         this.remove(panelEnviar);
@@ -217,7 +221,16 @@ public class VtnMenu extends javax.swing.JFrame {
         try{
         this.remove(panelBandeja);
         }catch(NullPointerException ex){}
-        
+        try{
+        this.remove(panelAlta);
+        }catch(NullPointerException ex){}
+        pack();
+        try{
+        this.remove(panelBaja);
+        }catch(NullPointerException ex){}
+        try{
+        this.remove(panelContra);
+        }catch(NullPointerException ex){}
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
